@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 function NavItems({ menu }) {
+  const [activeTab, setActiveTab] = useState("Dashboard");
+
   return (
     <ul className="flex gap-x-8 text-black">
       {menu.map((item) => {
@@ -6,7 +10,12 @@ function NavItems({ menu }) {
           <a
             key={item.title}
             href={item.link}
-            className="hover:text-[#19918F] hover:font-bold"
+            className={`${
+              activeTab === item.title
+                ? "text-[#19918F] font-bold"
+                : "text-black"
+            }`}
+            onClick={() => setActiveTab(item.title)}
           >
             {item.title}
           </a>
