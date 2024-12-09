@@ -1,7 +1,9 @@
+import { useState } from "react";
+
 import avatarImg from "../assets/avatar.png";
 
-function Avatar({ isAvatarActive, setIsAvatarActive }) {
-  console.log(isAvatarActive);
+function Avatar() {
+  const [isAvatarActive, setIsAvatarActive] = useState(false);
 
   return (
     <div className="flex items-center gap-x-4 ml-auto">
@@ -15,12 +17,7 @@ function Avatar({ isAvatarActive, setIsAvatarActive }) {
         }`}
         onClick={() => setIsAvatarActive((prev) => !prev)}
       >
-        <img
-          src={avatarImg}
-          alt="avatar"
-          className="rounded-full"
-          //   onClick={() => setIsAvatarActive((prev) => !prev)}
-        />
+        <img src={avatarImg} alt="avatar" className="rounded-full" />
       </div>
     </div>
   );

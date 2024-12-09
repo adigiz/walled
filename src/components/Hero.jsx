@@ -3,7 +3,6 @@ import Avatar from "./Avatar";
 import viewIcon from "../assets/view.png";
 
 function Hero() {
-  const [isAvatarActive, setIsAvatarActive] = useState(false);
   const [showBalance, setShowBalance] = useState(true);
 
   return (
@@ -17,10 +16,7 @@ function Hero() {
             Check all your incoming and outgoing transactions here
           </p>
         </div>
-        <Avatar
-          isAvatarActive={isAvatarActive}
-          setIsAvatarActive={setIsAvatarActive}
-        />
+        <Avatar />
       </div>
       <div className="flex mt-[4.5rem] gap-x-12">
         <div className="bg-[#19918F] p-12 rounded-2xl w-1/5">
