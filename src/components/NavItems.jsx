@@ -16,6 +16,13 @@ function NavItems({ menu }) {
           </NavLink>
         );
       })}
+      <NavLink
+        to="/"
+        className="text-black"
+        onClick={() => localStorage.removeItem("login")}
+      >
+        Sign Out
+      </NavLink>
     </ul>
   );
 }
