@@ -1,0 +1,111 @@
+{
+    "transactions": [
+      {
+        "id": "1",
+        "dateTime": "20:10 - 30 June 2022",
+        "type": "DEBIT",
+        "fromTo": "310001001",
+        "description": "Fore Coffee",
+        "amount": -75000.0
+      },
+      {
+        "id": "2",
+        "dateTime": "20:10 - 30 June 2022",
+        "type": "CREDIT",
+        "fromTo": "1001",
+        "description": "Topup from Bank Transfer",
+        "amount": 1000000.0
+      },
+      {
+        "id": "3",
+        "dateTime": "20:10 - 30 June 2022",
+        "type": "DEBIT",
+        "fromTo": "310001001",
+        "description": "Fore Coffee",
+        "amount": -75000.0
+      },
+      {
+        "id": "4",
+        "dateTime": "20:10 - 30 June 2022",
+        "type": "CREDIT",
+        "fromTo": "1001",
+        "description": "Topup from Bank Transfer",
+        "amount": 1000000.0
+      },
+      {
+        "id": "5",
+        "dateTime": "20:10 - 30 June 2022",
+        "type": "DEBIT",
+        "fromTo": "310001001",
+        "description": "Fore Coffee",
+        "amount": -75000.0
+      },
+      {
+        "id": "6",
+        "dateTime": "20:10 - 30 June 2022",
+        "type": "CREDIT",
+        "fromTo": "1001",
+        "description": "Topup from Bank Transfer",
+        "amount": 1000000.0
+      },
+      {
+        "id": "7",
+        "dateTime": "20:10 - 30 June 2022",
+        "type": "DEBIT",
+        "fromTo": "310001001",
+        "description": "Fore Coffee",
+        "amount": -75000.0
+      },
+      {
+        "id": "8",
+        "dateTime": "20:10 - 30 June 2022",
+        "type": "CREDIT",
+        "fromTo": "1001",
+        "description": "Topup from Bank Transfer",
+        "amount": 1000000.0
+      },
+      {
+        "id": "9",
+        "dateTime": "20:10 - 30 June 2022",
+        "type": "DEBIT",
+        "fromTo": "310001001",
+        "description": "Fore Coffee",
+        "amount": -75000.0
+      },
+      {
+        "id": "10",
+        "dateTime": "20:10 - 30 June 2022",
+        "type": "CREDIT",
+        "fromTo": "1001",
+        "description": "Topup from Bank Transfer",
+        "amount": 1000000.0
+      }
+    ],
+    "users": [
+      {
+        "id": "1",
+        "email": "john.doe@example.com",
+        "username": "johndoe",
+        "fullName": "John Doe",
+        "password": "password123",
+        "balance": 5000000
+      },
+      {
+        "id": "2",
+        "email": "jane.smith@example.com",
+        "username": "janesmith",
+        "fullName": "Jane Smith",
+        "password": "securepass456",
+        "balance": 7500000
+      },
+      {
+        "id": "3",
+        "email": "alice.jones@example.com",
+        "username": "alicejones",
+        "fullName": "Alice Jones",
+        "password": "alice2023",
+        "balance": 1200000
+      }
+    ]
+  }
+  

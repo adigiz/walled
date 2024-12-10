@@ -19,6 +19,7 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    localStorage.setItem("login", JSON.stringify(loginForm));
     navigate("/dashboard");
   };
 
