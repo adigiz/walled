@@ -14,10 +14,6 @@ const MENU = [
     title: "Topup",
     link: "/topup",
   },
-  {
-    title: "Sign Out",
-    link: "/",
-  },
 ];
 
 function Navbar() {
