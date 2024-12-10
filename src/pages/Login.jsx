@@ -1,11 +1,15 @@
 import { Link } from "react-router";
+
 import loginBg from "../assets/login.png";
 import logo from "../assets/logo.png";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import ActionButton from "../components/ActionButton";
+import useFetch from "../hooks/useFetch";
 
 function Login() {
+  const { data: users } = useFetch("http://localhost:3000/users");
+  const [invalidCredential, setInvalidCredential] = useState(false);
   const [loginForm, setLoginForm] = useState({
     email: "",
     password: "",
@@ -20,11 +24,18 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     localStorage.setItem("login", JSON.stringify(loginForm));
-    navigate("/dashboard");
+
+    const isEmailValid = users.find((user) => user.email === loginForm.email);
+    const isPasswordValid = users.find(
+      (user) => user.password === loginForm.password
+    );
+
+    if (isEmailValid && isPasswordValid) navigate("/dashboard");
+    else setInvalidCredential(true);
   };
 
   return (
-    <section className="flex w-full h-screen bg-white">
+    <section className="flex w-full h-screen bg-white dark:bg-[#2d2d30]">
       <div className="flex flex-col w-1/2 items-center justify-center">
         <div>
           <img className="w-[290px] mx-auto" src={logo} alt="logo" />
@@ -50,7 +61,10 @@ function Login() {
               Login
             </ActionButton>
           </form>
-          <div className="w-full mt-4 text-black">
+          {invalidCredential && (
+            <p className="text-red-500 mt-4">Email atau password salah</p>
+          )}
+          <div className="w-full mt-4 text-black dark:text-white">
             Belum punya akun?{" "}
             <Link to="/register" className="text-[#19918F] text-left">
               Daftar di sini
