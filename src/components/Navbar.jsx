@@ -18,7 +18,7 @@ const MENU = [
 
 function Navbar() {
   return (
-    <nav className="flex mx-auto w-screen justify-between items-center px-8 py-6 bg-white">
+    <nav className="flex mx-auto w-full justify-between items-center px-8 py-6 bg-white dark:bg-[#2d2d30]">
       <img src={logo} alt="walled logo" />
       <NavItems menu={MENU} />
     </nav>
