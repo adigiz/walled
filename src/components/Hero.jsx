@@ -1,12 +1,22 @@
+import { useEffect, useState } from "react";
 import Avatar from "./Avatar";
 
 function Hero() {
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    const loginObj = localStorage.getItem("login");
+    const credential = JSON.parse(loginObj);
+
+    if (credential?.email) setEmail(credential.email);
+  }, []);
+
   return (
     <section className="w-full px-16 mt-12">
       <div className="flex items-center justify-center">
         <div className="mr-auto">
           <h1 className="text-black text-6xl font-bold">
-            Good Morning, Chelsea!
+            Good Morning, {email}!
           </h1>
           <p className="text-black text-2xl mt-3">
             Check all your incoming and outgoing transactions here
