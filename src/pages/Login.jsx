@@ -4,6 +4,7 @@ import logo from "../assets/logo.png";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import ActionButton from "../components/ActionButton";
+import useFetch from "../hooks/useFetch";
 
 function Login() {
   const [loginForm, setLoginForm] = useState({
@@ -11,24 +12,51 @@ function Login() {
     password: "",
   });
 
+  const [errorMsg, setErrorMsg] = useState("");
+
   const navigate = useNavigate();
+  const { fetchData, isLoading } = useFetch("/users", {
+    method: "GET",
+  });
 
   const handleChange = (e) => {
     setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    localStorage.setItem("login", JSON.stringify(loginForm));
-    navigate("/dashboard");
+    try {
+      const response = await fetchData();
+      if (response) {
+        const user = response.find(
+          (u) =>
+            u.email === loginForm.email && u.password === loginForm.password
+        );
+        if (user) {
+          localStorage.setItem("login", JSON.stringify(user));
+          navigate("/dashboard");
+        } else {
+          setErrorMsg("Invalid email or password");
+        }
+      }
+    } catch (err) {
+      console.log(err)
+      setErrorMsg("Something went wrong");
+    }
   };
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <section className="flex w-full h-screen bg-white">
       <div className="flex flex-col w-1/2 items-center justify-center">
         <div>
           <img className="w-[290px] mx-auto" src={logo} alt="logo" />
+          
           <form className="flex flex-col mt-24 gap-y-5">
+          {errorMsg && <p className="text-red-500 text-center">{errorMsg}</p>}
             <input
               className="bg-[#FAFBFD] pl-7 py-4 min-w-[400px] rounded-[10px]"
               name="email"

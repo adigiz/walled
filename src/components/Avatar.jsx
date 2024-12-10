@@ -2,13 +2,13 @@ import { useState } from "react";
 
 import avatarImg from "../assets/avatar.png";
 
-function Avatar() {
+function Avatar({ name }) {
   const [isAvatarActive, setIsAvatarActive] = useState(false);
 
   return (
     <div className="flex items-center gap-x-4 ml-auto">
       <span className="text-right">
-        <p className="text-black font-bold">Chelsea Immanuela</p>
+        <p className="text-black font-bold">{name}</p>
         <p className="text-black">Personal Account</p>
       </span>
       <div
