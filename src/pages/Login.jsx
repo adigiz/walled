@@ -19,6 +19,7 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    localStorage.setItem("login", JSON.stringify(loginForm));
     navigate("/dashboard");
   };
 
@@ -29,14 +30,14 @@ function Login() {
           <img className="w-[290px] mx-auto" src={logo} alt="logo" />
           <form className="flex flex-col mt-24 gap-y-5">
             <input
-              className="bg-[#FAFBFD] pl-7 py-4 min-w-[400px] rounded-[10px]"
+              className="bg-[#FAFBFD] pl-7 py-4 min-w-[400px] rounded-[10px] text-black"
               name="email"
               type="email"
               placeholder="Email"
               onChange={(e) => handleChange(e)}
             />
             <input
-              className="bg-[#FAFBFD] pl-7 py-4 min-w-[400px] rounded-[10px]"
+              className="bg-[#FAFBFD] pl-7 py-4 min-w-[400px] rounded-[10px] text-black"
               name="password"
               type="password"
               placeholder="Password"
