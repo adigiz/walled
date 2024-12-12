@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import ActionButton from "../components/ActionButton";
 import useFetch from "../hooks/useFetch";
 import { getCurrentUser } from "../utils";
@@ -6,12 +7,14 @@ import { getCurrentUser } from "../utils";
 function Transfer() {
   const [amount, setAmount] = useState(0);
   const [isBalanceLacking, setIsBalanceLacking] = useState(false);
-  const { data: users } = useFetch("http://localhost:3000/users");
+  const { data: users } = useFetch("http://localhost:8080/users");
 
   const currentUser = getCurrentUser(users);
 
   const handleAmountChange = (e) => {
-    setAmount(e.target.value);
+    const val = e.target.validity.valid ? e.target.value : amount;
+
+    setAmount(val);
   };
 
   const handleTransfer = async () => {
@@ -69,7 +72,9 @@ function Transfer() {
             <span className="font-semibold">IDR</span>
             <input
               name="amount"
-              type="number"
+              type="text"
+              pattern="[0-9]*"
+              value={amount}
               onChange={handleAmountChange}
               className="bg-[#FAFBFD] outline-none ml-2 mt-2 font-semibold"
             />
