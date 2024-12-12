@@ -8,7 +8,7 @@ import ActionButton from "../components/ActionButton";
 import useFetch from "../hooks/useFetch";
 
 function Login() {
-  const { data: users } = useFetch("http://localhost:3000/users");
+  const { data: users } = useFetch("http://localhost:8080/users");
   const [invalidCredential, setInvalidCredential] = useState(false);
   const [loginForm, setLoginForm] = useState({
     email: "",
@@ -23,15 +23,16 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem("login", JSON.stringify(loginForm));
 
     const isEmailValid = users.find((user) => user.email === loginForm.email);
     const isPasswordValid = users.find(
       (user) => user.password === loginForm.password
     );
 
-    if (isEmailValid && isPasswordValid) navigate("/dashboard");
-    else setInvalidCredential(true);
+    if (isEmailValid && isPasswordValid) {
+      localStorage.setItem("login", JSON.stringify(loginForm));
+      navigate("/dashboard");
+    } else setInvalidCredential(true);
   };
 
   return (
