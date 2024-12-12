@@ -11,7 +11,7 @@ import { getCurrentUser } from "../utils";
 
 function Hero() {
   const [showBalance, setShowBalance] = useState(true);
-  const { data: users } = useFetch("http://localhost:3000/users");
+  const { data: users } = useFetch("http://localhost:8080/users");
 
   const currentUser = getCurrentUser(users);
 
