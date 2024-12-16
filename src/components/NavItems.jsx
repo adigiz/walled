@@ -13,8 +13,6 @@ function NavItems({ menu }) {
     }
   };
 
-  console.log(themeMode);
-
   return (
     <ul className="flex gap-x-8">
       {menu.map((item) => {
