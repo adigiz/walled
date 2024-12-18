@@ -1,34 +1,55 @@
 import { useState } from "react";
+import axios from "axios";
 
 import ActionButton from "../components/ActionButton";
 
 function Topup() {
-  const [amount, setAmount] = useState(0);
+  const [topupData, setTopupData] = useState({
+    amount: 0,
+    desc: "",
+  });
 
-  const handleAmountChange = (e) => {
-    const val = e.target.validity.valid ? e.target.value : amount;
+  const handleInputChange = (e) => {
+    setTopupData({ ...topupData, [e.target.name]: e.target.value });
+  };
 
-    setAmount(val);
+  const handleSubmit = async () => {
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/transactions/topup`,
+        { amount: topupData.amount, desc: topupData.desc },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("login")}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <section className="w-full px-16 pt-12 bg-[#fafbfd] dark:bg-[#3E3E42]">
+    <section className="w-full min-h-screen px-16 pt-12 bg-[#fafbfd] dark:bg-[#3E3E42]">
       <div className="w-1/2 mx-auto">
-        <h1 className="font-bold text-5xl">Topup</h1>
+        <h1 className="font-bold text-5xl dark:text-white">Topup</h1>
         <div className="mt-6 shadow-[0_0_10px_0_rgba(91,91,91,0.1)] bg-white py-[56px] px-[56px] rounded-[20px]">
           <div className="pt-5 px-8 pb-9 bg-[#FAFBFD] rounded-[20px]">
             <h2 className="font-semibold">Amount</h2>
-            <span className="font-semibold">IDR</span>
-            <input
-              name="amount"
-              type="text"
-              pattern="[0-9]*"
-              value={amount}
-              onChange={handleAmountChange}
-              className="bg-[#FAFBFD] outline-none ml-2 mt-2 font-semibold"
-            />
+            <div className="flex items-center mt-2">
+              <span className="font-semibold">IDR</span>
+              <input
+                id="amount"
+                name="amount"
+                type="text"
+                pattern="[0-9]*"
+                value={topupData.amount}
+                onChange={handleInputChange}
+                className="bg-[#FAFBFD] outline-none ml-2 font-semibold w-full"
+              />
+            </div>
           </div>
-          <div className="w-full mt-7 flex shadow-[0_0_10px0_rgba(91, 91, 91, 0.1)]">
+          <div className="w-full mt-7 flex shadow-[0_0_10px_0_rgba(91,91,91,0.1)] rounded-l-[20px]">
             <button className="absolute z-50 py-4 px-8 bg-[#EDEDED] rounded-[20px] font-bold text-2xl">
               <label htmlFor="to">From</label>
             </button>
@@ -40,21 +61,26 @@ function Topup() {
               <option value="credit_card">Credit Card</option>
             </select>
           </div>
-          <div className="py-4 px-8 mt-7 bg-[#FAFBFD] rounded-[20px]">
+          <div className="flex items-center py-4 px-8 mt-7 bg-[#FAFBFD] rounded-[20px]">
             <label htmlFor="notes" className="font-semibold">
               Notes:
             </label>
             <input
-              name="notes"
+              name="desc"
               type="text"
-              className="bg-[#fafbfd] outline-none ml-2"
+              value={topupData.desc}
+              onChange={handleInputChange}
+              className="bg-[#fafbfd] outline-none ml-2 w-full"
             />
           </div>
-          {/* {isBalanceLacking && (
-            <p className="mt-2 text-red-500">Maaf, saldo Anda kurang</p>
-          )} */}
           <div className="flex flex-col mt-[60px]">
-            <ActionButton onClick={() => {}}>Topup</ActionButton>
+            <ActionButton
+              onClick={() => {
+                handleSubmit();
+              }}
+            >
+              Topup
+            </ActionButton>
           </div>
         </div>
       </div>

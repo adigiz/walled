@@ -1,17 +1,18 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-function useFetch(url) {
+function useFetch(url, jwtToken) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const fetchData = async (url) => {
     try {
-      const response = await fetch(url);
+      const response = await axios.get(url, {
+        headers: { Authorization: `Bearer ${jwtToken}` },
+      });
 
-      if (!response.ok) throw new Error("Network response was not ok");
-      const result = await response.json();
-      setData(result);
+      setData(response.data.data);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -20,8 +21,8 @@ function useFetch(url) {
   };
 
   useEffect(() => {
-    fetchData(url);
-  }, [url]);
+    if (jwtToken) fetchData(url);
+  }, []);
 
   return { data, loading, error };
 }

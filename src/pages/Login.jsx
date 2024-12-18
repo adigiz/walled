@@ -1,38 +1,47 @@
 import { Link } from "react-router";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import axios from "axios";
 
 import loginBg from "../assets/login.png";
 import logo from "../assets/logo.png";
-import { useState } from "react";
-import { useNavigate } from "react-router";
 import ActionButton from "../components/ActionButton";
-import useFetch from "../hooks/useFetch";
 
 function Login() {
-  const { data: users } = useFetch("http://localhost:8080/users");
-  const [invalidCredential, setInvalidCredential] = useState(false);
   const [loginForm, setLoginForm] = useState({
     email: "",
     password: "",
   });
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const isEmailValid = users.find((user) => user.email === loginForm.email);
-    const isPasswordValid = users.find(
-      (user) => user.password === loginForm.password
-    );
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/auth/login`,
+        loginForm,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    if (isEmailValid && isPasswordValid) {
-      localStorage.setItem("login", JSON.stringify(loginForm));
-      navigate("/dashboard");
-    } else setInvalidCredential(true);
+      if (response.status === 200) {
+        const token = await response.json();
+
+        localStorage.setItem("login", token.data.token);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -56,15 +65,12 @@ function Login() {
               onChange={(e) => handleChange(e)}
             />
             <ActionButton
-              disabled={!loginForm.email || !loginForm.password}
+              disabled={!loginForm.email || !loginForm.password.length > 8}
               onClick={handleSubmit}
             >
               Login
             </ActionButton>
           </form>
-          {invalidCredential && (
-            <p className="text-red-500 mt-4">Email atau password salah</p>
-          )}
           <div className="w-full mt-4 text-black dark:text-white">
             Belum punya akun?{" "}
             <Link to="/register" className="text-[#19918F] text-left">

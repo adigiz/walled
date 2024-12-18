@@ -1,6 +1,6 @@
 import { NavLink } from "react-router";
 import { IoSunnyOutline, IoMoonOutline } from "react-icons/io5";
-import useTheme from "../context/ThemeContext";
+import useTheme from "../contexts/ThemeContext";
 
 function NavItems({ menu }) {
   const { themeMode, darkTheme, lightTheme } = useTheme();

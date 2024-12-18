@@ -4,44 +4,41 @@ import logo from "../assets/logo.png";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import ActionButton from "../components/ActionButton";
+import axios from "axios";
 
 function Register() {
-  const [registerData, setRegisterData] = useState({
+  const [registerForm, setRegisterForm] = useState({
     name: "",
     email: "",
     password: "",
     avatar_url: "",
   });
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setRegisterData({ ...registerData, [e.target.name]: e.target.value });
+    setRegisterForm({ ...registerForm, [e.target.name]: e.target.value });
   };
 
-  const register = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/users", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(registerData),
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/auth/register`,
+        registerForm,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      const data = await response.json();
-
-      console.log("DATA", data);
+      if (response.status === 201) {
+        navigate("/");
+      }
     } catch (error) {
       console.error(error.message);
     }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    register();
-    navigate("/");
   };
 
   return (
